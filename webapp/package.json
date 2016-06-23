@@ -1,0 +1,30 @@
+{
+  "name": "webapp",
+  "version": "1.0.0",
+  "description": "Trabalho 2 de PA",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/Maasouza/Trabalho2PA"
+  },
+  "keywords": [
+    "Trabalho",
+    "UFRJ",
+    "programação",
+    "avançada"
+  ],
+  "author": "Marcos Filho",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Maasouza/Trabalho2PA/issues"
+  },
+  "homepage": "https://github.com/Maasouza/Trabalho2PA",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "pg": "^6.0.0"
+  }
+}

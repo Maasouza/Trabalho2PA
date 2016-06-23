@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Trabalho PA</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/script.js"></script>
+        <script src="js/jquery-3.0.0.js" type="text/javascript" charset="utf-8" async defer></script>       
+</head>
+<body >
+	<div class="body">
+		
+		<!--                    												DIV DE LOGIN							 -->		
+		<div id="dLogin" class="login">
+			<div class="header">
+			    <div> 
+			    	<a>Trabalho<span>PA</span></a>
+			    </div>
+			</div>
+			<br>
+
+		    <form method="post" id="formLogin" action="">
+		        <input type="text" placeholder="Usuario" required="" name="user"><br>
+		        <input type="password" placeholder="Senha" required="" name="pass"><br>
+		        <input type="Button" value="Entrar" id="btnEntrar">&nbsp;&nbsp;&nbsp;
+		        <input type="button" value="Cadastrar" id="btnCadastro">
+		    </form>
+		</div>
+		
+
+		<!--                    												DIV DE CADASTRO								 -->
+
+
+		<div id="dCadastro" class="login" >
+			<div class="header">
+			    <div> 
+			    	<a>Cadastro</a>
+			    </div>
+			</div>
+			<br>
+
+		    <form method="post" id="formCadastro" action="">
+		        <input type="text" placeholder="Usuario" required="" name="user"><br>
+		        <input type="Email" placeholder="Email" required="" name="email"><br>
+		        <input type="password" placeholder="Senha" required="" name="pass"><br>
+		        <input type="Button" value="Cadastrar" id="btnCadastrar">&nbsp;&nbsp;&nbsp;
+		        <input type="button" value="Voltar" id="btnVoltarC">
+		    </form>
+
+		</div>
+		
+
+
+		<!--                    												DIV DE BUSCA								 -->
+
+		<div id="dBusca" align="center" class="login">
+				<div class="header">
+				    <div id="hBusca"> 
+				    	<a>Buscar</a>
+				    </div>
+				</div>
+				<br>
+                <form id="formBusca" method="post" action="controller" name="formBusca">
+                    <input type="text" id="buscaP" name="buscaPatrimonio" value="" placeholder="Patrimônio"/>
+                    <input type="text" id="buscaT" name="buscaTitulo" value="" placeholder="Título"/>
+                    <input type="text" id="buscaA" name="buscaAutoria" value="" placeholder="Autoria"/>                    
+                    <input type="text" id="buscaV" name="buscaVeiculo" value="" placeholder="Veículo"/>
+                    <input type="text" id="buscaC" name="buscaPalavra" value="" placeholder="Palavras-chave"/>                    
+
+                    <fieldset id="fsData">
+			<legend>Data de publicação</legend>
+                    	De:<input type="date" id="buscaDd" name="buscaDataIni" placeholder="AAAA-MM-DD" value=""/>
+                    	&nbsp;Até:<input type="date" id="buscaDa" placeholder="AAAA-MM-DD" name="buscaDataIni" value="" />
+                    </fieldset>
+                    
+                    <fieldset style="margin-top: 5px;">
+			<legend>Buscar por</legend>
+                    	<input type="checkbox" id="cbP" checked /> Patrimônio &nbsp;&nbsp;-&nbsp;
+                    	<input type="checkbox" id="cbT" /> Titulo:
+                    	<select id="selectT">
+                    		<option value="0" selected="">E</option>
+                    		<option value="1">OU</option>
+                    	</select><br>
+                    	<input type="checkbox" id="cbA"  /> Autoria:
+                    	<select id="selectA">
+                    		<option value="0" selected="">E</option>
+                    		<option value="1">OU</option>
+                    	</select>&nbsp;&nbsp;-&nbsp;
+                    	<input type="checkbox" id="cbV" /> Veículo:
+                    	<select id="selectV">
+                    		<option value="0" selected="">E</option>
+                    		<option value="1">OU</option>
+                    	</select><br>
+
+                    	<input type="checkbox" id="cbC" /> Palavras:
+                    	<select id="selectP">
+                    		<option value="0" selected="">E</option>
+                    		<option value="1">OU</option>
+                    	</select>&nbsp;&nbsp;-&nbsp;
+                    	
+                    	<input type="checkbox" id="cbD" /> Data:
+                    	<select id="selectD">
+                    		<option value="0" selected="">E</option>
+                    		<option value="1">OU</option>
+                    	</select>
+
+                    </fieldset>
+
+                        <input type="button" id="btnBuscar" name="btnBuscar" value="Buscar"/>
+                	<input type="button" id="btnLimparBusca" name="btnLimpar" value="Limpar"/>
+                	<input type="button" id="btnCatalogar" name="btnCatalogar" value="Catalogar"/>
+  			<input type="button" id="btnSair" value="Sair" name="btnSair"/>
+					
+                </form>
+        </div>
+		
+		<!--                    												DIV DE RESULTADOS								 -->
+
+		<div id="dResultado"  align="center" class="login">
+			<fieldset id="fsR0">
+                <legend>val1</legend>
+            </fieldset>
+
+            <fieldset id="fsR0">
+                <legend>val2</legend>
+            </fieldset>
+
+            <fieldset id="fsR0">
+                <legend>val3</legend>
+            </fieldset>
+
+        </div>
+			
+
+	</div>
+
+</body>
+</html>

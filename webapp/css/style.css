@@ -1,0 +1,373 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 26/05/2016, 16:39:09
+    Author     : Marcos Filho
+*/
+
+
+        .body{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: auto;
+            height: auto;
+            background-color:#eee;
+            background-size: cover;
+            
+        }
+
+        .header{
+            position: absolute;
+            top: calc(50% );
+            left: calc(50% - 420px);
+            z-index: 2;
+        }
+
+        .header div{
+            float: left;
+            color: #fff;
+            font-family:  segoe ui, sans-serif;
+            font-size: 50px;
+            font-weight: 300;
+            text-shadow: 2px 2px 7px #000;
+        }
+
+        .header div span{
+            color: #4CAF50;
+            transition: 2s;
+        }
+
+
+        .login{
+            position: absolute;
+            top: calc(45% - 75px);
+            left: calc(50% - 70px);
+            height: 150px;
+            width: 350px;
+            padding: 10px;
+            z-index: 2;
+        }
+
+        .login input[type=text]{
+            width: 260px;
+            height: 35px;
+            background: transparent;
+            border: 1px solid rgba(3,3,3,0.6);
+            border-radius: 2px;
+            color: #4CAF50;
+            font-family: 'Exo', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            padding: 4px;
+        }
+
+      .login input[type=email]{
+            margin-top:10px;
+            width: 260px;
+            height: 35px;
+            background: transparent;
+            border: 1px solid rgba(3,3,3,0.6);
+            border-radius: 2px;
+            color: #4CAF50;
+            font-family: 'Exo', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            padding: 4px;
+        }
+        
+        .login input[type=password]{
+            width: 260px;
+            height: 35px;
+            background: transparent;
+            border: 1px solid rgba(3,3,3,0.6);
+            border-radius: 2px;
+            color: #4CAF50;
+            font-family: 'Exo', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            padding: 4px;
+            margin-top: 10px;
+        }
+
+        .login input[type=button]{
+            width: 270px;
+            height: 40px;
+            background: #333;
+            border: 1px solid #fff;
+            cursor: pointer;
+            border-radius: 2px;
+            color: #4CAF50;
+            font-family: 'Exo', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            padding: 6px;
+            margin-top: 10px;
+        }
+
+        .login input[type=button]:hover{
+            opacity: 0.8;
+        }
+
+        .login input[type=button]:active{
+            opacity: 0.6;
+        }
+
+        .login input[type=text]:focus{
+            outline: none;
+            border: 1px solid rgba(3,3,3,0.9);
+        }
+
+        .login input[type=password]:focus{
+            outline: none;
+            border: 1px solid rgba(3,3,3,0.9);
+        }
+
+        .login input[type=button]:focus{
+            outline: none;
+        }
+        
+
+        ::-webkit-input-placeholder{
+            color: rgba(3,3,3,0.5);
+        }
+
+        ::-moz-input-placeholder{
+            color: rgba(3,3,3,0.6);
+        }
+
+
+        #dCadastro,#dResultado{
+
+            display:none;
+
+        }
+
+        #dResultado{
+            
+        }
+        #dBusca{
+            margin-top:-230px;
+            display:none;
+            margin-left:-150px;  
+            width:450px;
+        }
+
+        #hBusca{
+
+            margin-left:50px;
+
+        }
+
+        #dBusca #formBusca{
+
+            border-left:3px #4CAF50 solid;
+
+        }
+
+        #dBusca #formBusca input[type=text]{
+
+            width: 420px;
+            height: 35px;
+            margin-bottom:10px;
+
+        }
+
+        #dBusca #formBusca input[type=checkbox]{
+            
+        }
+
+
+        #dBusca #formBusca input[type=button]{
+            
+            width: 215px;
+            height: 35px;
+            border-radius:5px;
+
+        }
+
+        #dBusca #formBusca input[type=date]{
+            
+            width: 150px;
+            height: 20px;
+            background: transparent;
+            border: 1px solid rgba(3,3,3,0.6);
+            border-radius: 2px;
+            color: #4CAF50;
+            font-family: 'Exo', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            padding: 4px;
+
+        }
+
+
+
+
+
+        body {
+
+          padding: 0;
+          margin: 0;
+          font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-size: 16px;
+          line-height: 1.5;
+
+        }
+
+
+
+
+        #container {
+            
+            background: #fff;
+            margin: 1px auto;
+            width: 50%;
+            -moz-box-shadow: 0px 0px 15px 0px #ccc;
+            box-shadow:0px 2px 15px 0px rgba(0, 0, 0, 0.3);
+            border-radius: 0px 0px 10px 10px;
+
+        }
+
+        #menu {
+
+            margin: 0 auto;
+            float: left;
+            width: 100%;
+            color: #777;
+            display: inline-block;
+            font-size: 0;
+
+        }
+
+        #menu a{
+
+            padding-top:5px;
+            padding-bottom:5px; 
+            padding-left: 30px;
+            padding-right: 30px;
+            text-decoration: none;
+            list-style-type: nome;
+            letter-spacing: 0;
+            color:#FFF;
+            font-size: 25px;
+
+        }
+        #menu div{
+
+            padding: 0;
+            margin: 0;
+            background:#5f5f5f;
+            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.16), 0px 2px 15px 0px rgba(0, 0, 0, 0.3);
+
+        }
+
+        #menu a.active{
+
+            background:#4CAF50;
+
+        }
+
+        #menu a.active:hover{
+
+            background:#4CAF50;
+            transition: 2s;
+
+        }
+
+        #menu a:hover{
+         
+            background: #000;
+            transition: 2s;
+
+        }
+
+        a{
+
+            text-decoration: none;  
+            color:#333;
+
+        }
+
+
+        #header h1,h3{
+
+            margin-bottom: 2px;
+
+        }
+
+        #header h3{
+
+            margin-top: 0;
+            color:#fa3f4b;
+
+        }
+
+        input[type=text]{
+
+            width: 350px;
+            height: 25px;
+            background: transparent;
+            border: 1px solid rgba(55,55,55,0.6);
+            border-radius: 2px;
+            color: #999;
+            font-family: 'Exo', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            padding: 4px;
+
+        }
+         
+         
+        #idInput{
+            float: left;
+            width: 60px;
+            margin-left: 30px;
+            height: 30px;
+            border:none;
+        }
+
+
+        select{
+            
+            width: 65px;
+            height: 30px;
+            background: transparent;
+            border: 1px solid rgba(55,55,55,0.6);
+            cursor: pointer;
+            border-radius: 2px;
+            color: #999;
+            font-family: 'Exo', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            padding: 5px;
+            margin-top: 10px;    
+
+        }
+
+        fieldset{
+
+           color:#666;
+           border-radius: 5px; 
+           width: 400px;
+
+        }
+
+        fieldset input[type=button]{
+
+                height: 20px;
+                font-size: 12px;
+                margin: 0;
+                padding:0;
+        }
+
+        #tag{
+
+            color: #4CAF50;    
+
+        }
