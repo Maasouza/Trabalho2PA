@@ -85,6 +85,28 @@ var initBTN = function(){
     	}
     );
 
+    var btnCatalogar = document.getElementById("btnCatalogar");
+
+    btnCatalogar.addEventListener("click", 
+        function(){
+            mudarPagina("#dBusca","#dCatalogacao");
+        }
+    );
+
+    var btnLimparC = document.getElementById("btnLimparC");
+    btnLimparC.addEventListener("click",
+        function(){
+            document.getElementById("formCatalogo").reset();
+        }
+    );
+
+    var btnVoltarCat = document.getElementById("btnVoltarCat");
+    btnVoltarCat.addEventListener("click",
+        function () {
+             mudarPagina("#dCatalogacao","#dBusca");
+        }
+    );
+
     var btnLimpar = document.getElementById("btnLimparBusca");
 
     btnLimpar.addEventListener("click", 
@@ -285,14 +307,29 @@ var buscaRequest = function(data,func,type){
 var mostrarResultado = function(json){
    
     result = json;
-    
-    for(i = 0;i< result.length ; i++){
-        $("#dResultado").append(criarObjeto(result[i].oi,"oi"+i));
-        $("#dResultado").append(criarObjeto(result[i].mundo,"mundo"+i));
+    var nresults = 3;
+
+
+
+
+    if(result.length%nresults==0){
+
+        for(i = 0 ; i <  Math.floor(result.length/nresults) ;i++){
+            $("#dpagina").append("<a  onclick='selPagina("+ i +")' >"+(i+1)+"</a>");
+        }
+
+    }else{
+
+        for(i = 0;i < Math.floor(result.length/nresults) + 1 ; i++ ){
+            $("#dpagina").append("<a  onclick='selPagina("+ i +")' >"+(i+1)+"</a>");
+        }
+
     }
 
 };
 
-var criarObjeto = function(texto,id){
-    return "<input type='text' id='"+id+"' value='"+texto+"'/>"
-}
+var criarObjeto = function(texto,id,obj){
+};
+
+var selPagina = function(pg){
+};

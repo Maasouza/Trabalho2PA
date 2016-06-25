@@ -142,15 +142,34 @@ and open the template in the editor.
         }
 
 
-        #dCadastro,#dResultado{
+        #dCadastro,#dResultado,#dCatalogacao{
 
             display:none;
 
         }
 
-        #dResultado{
-            
+        #dResultado,#dCatalogacao{
+            margin:-150px;
+            width:450px;
         }
+
+
+        #dCatalogacao form{
+            padding-left:10px;
+            border-left:3px #4CAF50 solid;
+        }
+
+        #formCatalogo  input[type=text]{
+            width: 425px;
+            height: 35px;
+            margin-bottom:10px;
+        }
+
+        #formCatalogo input[type=button]{
+            width:142px;
+            border-radius:5px;
+        }
+
         #dBusca{
             margin-top:-230px;
             display:none;
@@ -176,10 +195,6 @@ and open the template in the editor.
             height: 35px;
             margin-bottom:10px;
 
-        }
-
-        #dBusca #formBusca input[type=checkbox]{
-            
         }
 
 
@@ -221,71 +236,6 @@ and open the template in the editor.
         }
 
 
-
-
-        #container {
-            
-            background: #fff;
-            margin: 1px auto;
-            width: 50%;
-            -moz-box-shadow: 0px 0px 15px 0px #ccc;
-            box-shadow:0px 2px 15px 0px rgba(0, 0, 0, 0.3);
-            border-radius: 0px 0px 10px 10px;
-
-        }
-
-        #menu {
-
-            margin: 0 auto;
-            float: left;
-            width: 100%;
-            color: #777;
-            display: inline-block;
-            font-size: 0;
-
-        }
-
-        #menu a{
-
-            padding-top:5px;
-            padding-bottom:5px; 
-            padding-left: 30px;
-            padding-right: 30px;
-            text-decoration: none;
-            list-style-type: nome;
-            letter-spacing: 0;
-            color:#FFF;
-            font-size: 25px;
-
-        }
-        #menu div{
-
-            padding: 0;
-            margin: 0;
-            background:#5f5f5f;
-            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.16), 0px 2px 15px 0px rgba(0, 0, 0, 0.3);
-
-        }
-
-        #menu a.active{
-
-            background:#4CAF50;
-
-        }
-
-        #menu a.active:hover{
-
-            background:#4CAF50;
-            transition: 2s;
-
-        }
-
-        #menu a:hover{
-         
-            background: #000;
-            transition: 2s;
-
-        }
 
         a{
 
