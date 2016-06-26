@@ -120,6 +120,14 @@ var initBTN = function(){
 				mostraInput("#buscaP");
     	}
     );
+
+
+    var btnAdcionarC = document.getElementById("btnAdcionarC");
+    btnAdcionarC.addEventListener("click",
+        function(){
+            enviarInserir();
+        }
+    )
 };
 
 var gerenciarCheckBox = function(){
@@ -282,10 +290,42 @@ var enviarBusca = function (){
             json.data = [valorI,valorF,tipo];
         } 
     }
-    buscaRequest(json,mostrarResultado,"buscar");
+    mandarRequest(json,mostrarResultado,"buscar");
 };
 
-var buscaRequest = function(data,func,type){
+var enviarInserir = function(){
+    
+    json={
+        "titulo":document.getElementById("catalogoT").value,
+        "autoria":document.getElementById("catalogoA").value,
+        "veiculo":document.getElementById("catalogoV").value,
+        "chave":document.getElementById("catalogoC").value,
+        "dpub":document.getElementById("catalogoD").value
+    }
+    mandarRequest(json,mostrarMsg,"inserir");
+}
+
+var enviarDelete = function(){
+    json={
+        "patrimonio":document.getElementById("catalogoP").value
+    }
+
+    mandarRequest(json,mostrarMsg,"deletar");
+}
+
+var enviarUpdate = function(){
+    json={
+        "patrimonio":document.getElementById("catalogoP").value,
+        "titulo":document.getElementById("catalogoT").value,
+        "autoria":document.getElementById("catalogoA").value,
+        "veiculo":document.getElementById("catalogoV").value,
+        "chave":document.getElementById("catalogoC").value,
+        "dpub":document.getElementById("catalogoD").value
+    }
+    mandarRequest(json,mostrarMsg,"update")
+}
+
+var mandarRequest = function(data,func,type){
 
     var objPedidoAJAX = new XMLHttpRequest();
     objPedidoAJAX.open("POST", "http://localhost:3000/"+type);
@@ -303,6 +343,14 @@ var buscaRequest = function(data,func,type){
     objPedidoAJAX.send(JSON.stringify(data));
 
 };
+
+var mostrarMsg = function (json){
+    alert(json.msg);
+    if(json.patrimonio!=null){
+        document.getElementById("catalogoP").value=json.patrimonio;
+    }
+}
+
 
 var mostrarResultado = function(json){
    
@@ -325,7 +373,6 @@ var mostrarResultado = function(json){
         }
 
     }
-
 };
 
 var criarObjeto = function(texto,id,obj){

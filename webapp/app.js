@@ -22,6 +22,12 @@ app.post('/buscar', function (req, res) {
   var valores = [];
   count = 1;
  
+ var types = pg.types;//arrumando o timestamp
+ types.setTypeParser(1114, function(stringValue) {
+ 	 return stringValue;
+ });
+
+
  // if(data.patrimonio!=null){
  //  	if(data.patrimonio!=""){
  //  		query += "where patrimonio like $1";
@@ -50,7 +56,6 @@ app.post('/buscar', function (req, res) {
 	//  }
  //  }
 
-  console.log(sql);
   pg.connect(conString, function(err, client, done) {
         // Handle connection errors
         if(err) {
@@ -58,9 +63,7 @@ app.post('/buscar', function (req, res) {
           console.log(err);
         }
 
-        // SQL Query > Insert Data
         var query = client.query(sql);
-
         // Stream results back one row at a time
         query.on('row', function(row) {
             result.push(row);
@@ -72,14 +75,70 @@ app.post('/buscar', function (req, res) {
             res.send(result);
         });
 
-
     });
-
-  console.log("resultado"+result);
 
 
 });
 
+app.post('/inserir',function(req,res){
+	var result={};
+	var data = req.body;
+	sql = "INSERT INTO dadoscatalogo(titulo,autoria,veiculo,data_publicacao) values ($1,$2,$3,to_timestamp($4,'YYYY-MM-DD')) returning patrimonio;";
+	  pg.connect(conString, function(err, client, done) {
+	        // Handle connection errors
+	        if(err) {
+	          done();
+	          console.log(err);
+	          result.msg = "Erro ao criar novo registro !";
+	          res.send(result);
+	        }
+
+	        //inserir na tabela principal
+	        var query = client.query(sql,[data.titulo,data.autoria,data.veiculo,data.dpub]);
+	        query.on('row',function(row){
+	        	result.patrimonio = row.patrimonio;
+	        });
+
+	        // After all data is returned, close connection and return results
+	        query.on('end', function() {
+		        //inserir as palavras chaves
+		        var chaves =  data.chave.split(' ');
+		        sql = "INSERT INTO palavras_chave(palchave,patrimonio) values (upper($1),$2);";
+		        
+		        for(i=0;i<chaves.length;i++){
+		        	client.query(sql,[chaves[i],result.patrimonio]);
+		    	}
+
+		    	var autor = data.autoria.split(' ');
+
+		        sql = "INSERT INTO palavrasautorianormal(palavra_autoria_normal,patrimonio) values (upper($1),$2)";
+		        for(i=0;i<autor.length;i++){
+		        	client.query(sql,[autor[i],result.patrimonio]);
+		    	}
+
+		    	var titulo = data.titulo.split(' ');
+
+		        sql = "INSERT INTO palavrastitulonormal(palavra_titulo_normal,patrimonio) values (upper($1),$2);";
+		        
+		        for(i=0;i<titulo.length;i++){
+		        	client.query(sql,[titulo[i],result.patrimonio]);
+		    	}
+
+		    	var veiculo = data.veiculo.split(' ');
+
+		        sql = "INSERT INTO palavrasveiculonormal(palavra_veiculo_normal,patrimonio) values (upper($1),$2);";
+		        
+		        for(i=0;i<veiculo.length;i++){
+		        	client.query(sql,[veiculo[i],result.patrimonio]);
+		    	}
+
+	            done();
+	            result.msg = "Registro criado com sucesso!";
+	            res.send(result);
+	        });
+
+	    });
+});
 
 app.post('/deletar',function(req,res) {
 	var data = req.body;
