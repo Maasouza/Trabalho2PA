@@ -370,6 +370,20 @@ var mandarRequest = function(data,func,type){
 
 };
 
+var editarRegistro = function(reg){
+    document.getElementById("catalogoP").value=result[reg].patrimonio;
+    document.getElementById("catalogoT").value=result[reg].titulo;
+    document.getElementById("catalogoA").value=result[reg].autoria;
+    document.getElementById("catalogoV").value=result[reg].veiculo;
+    document.getElementById("catalogoC").value=result[reg].chave;
+    document.getElementById("catalogoD").value=result[reg].data_publicacao;
+    mudarPagina("#dResultado","#dCatalogacao");
+    $(".pagina").remove();
+    $(".resultado").remove();
+    $("#rPage").text("Pagina 1");
+
+}
+
 var mostrarMsg = function (json){
     if(json.patrimonio!=null){
         document.getElementById("catalogoP").value=json.patrimonio;

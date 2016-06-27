@@ -19,67 +19,232 @@ app.use(function(req, res, next) {
 
 app.use(bodyParser.json());
 
-app.post('/buscar', function (req, res) {
-  
-  var result=[];
-  var data = req.body;
-  var sql = "SELECT * FROM dadoscatalogo;";
-  var valores = [];
-  count = 1;
- 
  var types = pg.types;//arrumando o timestamp
  types.setTypeParser(1114, function(stringValue) {
  	 return stringValue;
  });
 
-{
- // if(data.patrimonio!=null){
- //  	if(data.patrimonio!=""){
- //  		query += "where patrimonio like $1";
- //  	}
- //  }else{
-	//  if(data.titulo != null){
-	//  	query +=" where titulo = $1"
-	//  	valores.append(data.titulo[0])
-	//  	count++;
-	//  }
-	//  if(data.autoria != null){
-	//  	if(count > 1){
-	//  		query+=" "+data.autoria[1]+" autoria like $"+count;
-	//  	}else{
-	//  		query+=" where autoria like $1"
-	//  	}
-	//  	count++;
-	//  }
-	//  if(data.veiculo != null){
-	//  	if(count > 1){
-	//  		query+=" "+data.veiculo[1]+" veiculo like $"+count;
-	//  	}else{
-	//  		query+=" where veiculo like $1"	
-	//  	}
-	//  	count++;
-	//  }
- //  }
+app.post('/buscar', function (req, res) {
+  
+  var result=[];
+  var data = req.body;
+  var valores = [];
+  countAND = 1;
+  countOr = 1;
+  count = 1;
+ 
+  var sqlBase = "SELECT * FROM dadoscatalogo ";
+  var sqlAND = " WHERE ";
+  var linker = " AND ";
+  var sqlOR = " ";
+  var sql = "";
 
-}
+
+
+
+	if(data.patrimonio!=null){
+	  	if(data.patrimonio!=""){
+	  		sqlBase += " where patrimonio = to_number($1,'9999999')";
+	  		valores.push(data.patrimonio);
+	  		sql = sqlBase;
+	 	}
+    }else{
+    	if(data.titulo!=null){
+
+    		if(data.titulo[1]=="OU"){
+    				sqlOR +="( titulo like $"+count+" ";
+    				count++;
+    				countOr++;
+    				valores.push(data.titulo[0]);
+    		}else{
+    				sqlAND +="( titulo like $"+count+" ";
+    				count++;
+    				countAND++;
+    				valores.push(data.titulo[0]);
+    		}
+    	}
+
+    	if(data.autor!=null){
+    		if(data.autor[1]=="OU"){
+    			if(countOr==1){
+    				sqlOR +="( autoria like $"+count+" ";
+    				valores.push(data.autor[0]);
+    			}else{
+    				sqlOR +="OR autoria like $"+count+" ";
+    				valores.push(data.autor[0]);
+    			}
+    			count++;
+    			countOr++;
+    		}else{
+    			if(countAND==1){
+    				sqlAND +="( autoria like $"+count+" ";
+    				valores.push(data.autor[0]);
+    			}else{
+    				sqlAND +="AND autoria like $"+count+" ";
+    				valores.push(data.autor[0]);
+    			}
+     				count++;
+    				countAND++;   				
+    		}
+    	}
+
+    	if(data.veiculo!=null){
+
+    		if(data.veiculo[1]=="OU"){
+    			if(countOr==1){
+    				sqlOR +="( veiculo like $"+count+" ";
+    				valores.push(data.veiculo[0]);
+    			}else{
+    				sqlOR +="OR veiculo like $"+count+" ";
+    				valores.push(data.veiculo[0]);
+    			}
+    			count++;
+    			countOr++;
+    		}else{
+    			if(countAND==1){
+    				sqlAND +="( veiculo like $"+count+" ";
+    				valores.push(data.veiculo[0]);
+    			}else{
+    				sqlAND +="AND veiculo like $"+count+" ";
+    				valores.push(data.veiculo[0]);
+    			}
+     				count++;
+    				countAND++;   				
+    		}
+    	}
+
+    	if(data.data!=null){
+
+    		if(data.data[2]=="OU"){
+    			if(countOr==1){
+    				if(data.data[0]!=""){
+    					sqlOR +="( data_publicacao > to_timestamp($"+count+",'YYYY-MM-DD') ";
+    					valores.push(data.data[0]);
+    					count++;
+    					    				countOr++;
+
+    				}
+    				if(data.data[1]!=""){
+    					sqlOR +="( data_publicacao < to_timestamp($"+count+",'YYYY-MM-DD') ";
+    					valores.push(data.data[1]);
+    					count++;
+    					    				countOr++;
+
+    				}
+
+    			}else{
+    				if(data.data[0]!=""){
+    					sqlOR +="OR data_publicacao > to_timestamp($"+count+",'YYYY-MM-DD') ";
+    					valores.push(data.data[0]);
+    					count++;
+    					    				countOr++;
+
+    				}
+    				if(data.data[1]!=""){
+    					sqlOR +="OR data_publicacao < to_timestamp($"+count+",'YYYY-MM-DD') ";
+    					valores.push(data.data[1]);
+    					count++;
+    					    				countOr++;
+
+    				}
+    			}
+    		}else{
+    			if(countAND==1){
+    				if(data.data[0]!=""){
+    					sqlAND +="( data_publicacao > to_timestamp($"+count+",'YYYY-MM-DD') ";
+    					valores.push(data.data[0]);
+    					count++;
+    					    				countAND++;
+
+    				}
+    				if(data.data[1]!=""){
+    					sqlAND +="( data_publicacao < to_timestamp($"+count+",'YYYY-MM-DD') ";
+    					valores.push(data.data[1]);
+    					count++;
+    					    				countAND++;
+
+    				}
+
+    			}else{
+    				if(data.data[0]!=""){
+    					sqlAND +="AND data_publicacao > to_timestamp($"+count+",'YYYY-MM-DD') ";
+    					valores.push(data.data[0]);
+    					count++;
+    					    				countAND++;
+
+    				}
+    				if(data.data[1]!=""){
+    					sqlAND +="AND data_publicacao < to_timestamp($"+count+",'YYYY-MM-DD') ";
+    					valores.push(data.data[1]);
+    					count++;
+    					    				countAND++;
+
+    				}
+    			}  				
+    		}
+    	}
+    }
+
+    if(countAND>1 && countOr>1){
+    	sqlAND+=")";
+    	sqlOR+=")"
+    	sql = sqlBase + sqlAND + linker + sqlOR ;
+    }
+
+    if(countAND>1 && countOr==1){
+    	sqlAND+=")";
+    	sql = sqlBase + sqlAND ;
+    }
+
+    if(countAND==1 && countOr>1){
+    	sqlOR+=")"
+    	sql = sqlBase +"WHERE" + sqlOR ;
+    }
+
+    if(countAND==1 && countOr==1){
+
+    	sql = sqlBase ;
+    }
+
+    console.log(sql);
+
+   
+
+
   pg.connect(conString, function(err, client, done) {
         // Handle connection errors
         if(err) {
           done();
           console.log(err);
         }
+        if(valores.length>0){
+	        var query = client.query(sql,valores);
+	    	
+	        // Stream results back one row at a time
+	        query.on('row', function(row) {
+	            result.push(row);
+	        });
 
-        var query = client.query(sql);
-        // Stream results back one row at a time
-        query.on('row', function(row) {
-            result.push(row);
-        });
+	        // After all data is returned, close connection and return results
+	        query.on('end', function() {
+	            done();
+	            res.send(result);
+	        });
+    	}else{
 
-        // After all data is returned, close connection and return results
-        query.on('end', function() {
-            done();
-            res.send(result);
-        });
+    		var query = client.query(sql);
+	    	
+	        // Stream results back one row at a time
+	        query.on('row', function(row) {
+	            result.push(row);
+	        });
+
+	        // After all data is returned, close connection and return results
+	        query.on('end', function() {
+	            done();
+	            res.send(result);
+	        });
+	    }
 
     });
 
@@ -112,7 +277,7 @@ app.post('/inserir',function(req,res){
 		        sql = "INSERT INTO palavras_chave(palchave,patrimonio,palchavenormal) values (upper($1),$2,$3);";
 		        
 		        for(i=0;i<chaves.length;i++){
-		        	client.query(sql,[chaves[i],result.patrimonio,result.chave]);
+		        	client.query(sql,[chaves[i],result.patrimonio,data.chave]);
 		    	}
 
 		    	var autor = data.autoria.split(' ');
