@@ -1,10 +1,12 @@
 var result;
+var pagina;
 
 window.onload = function(){
     initInputs();
     initBTN();
     gerenciarCheckBox();
         result="";
+        pagina=0;
 };
 
 
@@ -128,6 +130,28 @@ var initBTN = function(){
             enviarInserir();
         }
     )
+
+    var btnDeletarC = document.getElementById("btnDeletarC");
+    btnDeletarC.addEventListener("click", 
+        function(){
+            enviarDelete();
+        }
+    );
+
+    var btnEditarC = document.getElementById("btnEditarC");
+    btnEditarC.addEventListener("click", 
+        function(){
+            enviarUpdate();
+        }
+    );
+
+    var btnVoltarR = document.getElementById("btnVoltarR");
+    btnVoltarR.addEventListener("click",
+        function(){
+            mudarPagina("#dResultado","#dBusca");
+            $(".pagina").remove();
+
+    });
 };
 
 var gerenciarCheckBox = function(){
@@ -345,9 +369,13 @@ var mandarRequest = function(data,func,type){
 };
 
 var mostrarMsg = function (json){
-    alert(json.msg);
     if(json.patrimonio!=null){
         document.getElementById("catalogoP").value=json.patrimonio;
+        if(json.suc){
+            alert(json.msg)
+        }
+    }else{
+        document.getElementById("formCatalogo").reset();
     }
 }
 
@@ -355,28 +383,48 @@ var mostrarMsg = function (json){
 var mostrarResultado = function(json){
    
     result = json;
-    var nresults = 3;
+    var nresults = 5;
 
 
+    for(i=0;i<nresults;i++){
+        $("#dpagina").append("<fieldset class='resultado'>"+
+            "<legend>"+result[i].titulo+"</legend>"+
+            "Patrimonio : "+result[i].patrimonio+
+            "<br>Autoria : "+result[i].autoria+
+            "<br>Veículo : "+result[i].veiculo+
+            "<br>Data de publicação :"+result[i].data_publicacao+
+            "<br><button onclick='editarRegistro("+i+")'>Editar</button>"+
+            "</fieldset>");
+    }
 
 
     if(result.length%nresults==0){
 
         for(i = 0 ; i <  Math.floor(result.length/nresults) ;i++){
-            $("#dpagina").append("<a  onclick='selPagina("+ i +")' >"+(i+1)+"</a>");
+            $("#dpaginas").append("<a class='pagina' onclick='selPagina("+ i +")' >"+(i+1)+"</a>");
         }
 
     }else{
 
         for(i = 0;i < Math.floor(result.length/nresults) + 1 ; i++ ){
-            $("#dpagina").append("<a  onclick='selPagina("+ i +")' >"+(i+1)+"</a>");
+            $("#dpaginas").append("<a class='pagina' onclick='selPagina("+ i +")' >"+(i+1)+"</a>");
         }
 
     }
 };
 
-var criarObjeto = function(texto,id,obj){
-};
 
 var selPagina = function(pg){
+    $(".resultado").remove();
+    for(i=pg*5;i<Math.min((pg+1)*5,result.length);i++){
+        $("#dpagina").append("<fieldset class='resultado'>"+
+            "<legend>"+result[i].titulo+"</legend>"+
+            "Patrimonio : "+result[i].patrimonio+
+            "<br>Autoria : "+result[i].autoria+
+            "<br>Veículo : "+result[i].veiculo+
+            "<br>Data de publicação :"+result[i].data_publicacao+
+            "<br><button onclick='editarRegistro("+i+")'>Editar</button>"+
+            "</fieldset>");
+    }
+
 };

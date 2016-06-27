@@ -2,7 +2,12 @@ var express = require('express');
 var bodyParser = require('body-parser')
 var pg = require('pg');
 
-var conString = "postgres://postgres:marcos@localhost:5432/bibliopdf";
+
+var user = "postgres";
+var pass = "marcos";
+var db = "bibliopdf";
+
+var conString = "postgres://"+user+":"+pass+"@localhost:5432/"+db;
 	
 var app = express();
 
@@ -27,7 +32,7 @@ app.post('/buscar', function (req, res) {
  	 return stringValue;
  });
 
-
+{
  // if(data.patrimonio!=null){
  //  	if(data.patrimonio!=""){
  //  		query += "where patrimonio like $1";
@@ -56,6 +61,7 @@ app.post('/buscar', function (req, res) {
 	//  }
  //  }
 
+}
   pg.connect(conString, function(err, client, done) {
         // Handle connection errors
         if(err) {
@@ -103,10 +109,10 @@ app.post('/inserir',function(req,res){
 	        query.on('end', function() {
 		        //inserir as palavras chaves
 		        var chaves =  data.chave.split(' ');
-		        sql = "INSERT INTO palavras_chave(palchave,patrimonio) values (upper($1),$2);";
+		        sql = "INSERT INTO palavras_chave(palchave,patrimonio,palchavenormal) values (upper($1),$2,$3);";
 		        
 		        for(i=0;i<chaves.length;i++){
-		        	client.query(sql,[chaves[i],result.patrimonio]);
+		        	client.query(sql,[chaves[i],result.patrimonio,result.chave]);
 		    	}
 
 		    	var autor = data.autoria.split(' ');
@@ -143,8 +149,93 @@ app.post('/inserir',function(req,res){
 app.post('/deletar',function(req,res) {
 	var data = req.body;
 	var json=[];
+	var result = {};
 
-	res.send(json);
+	pg.connect(conString, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+          done();
+          console.log(err);
+        }
+
+        // SQL Query > Delete Data
+        query = client.query("DELETE FROM dadoscatalogo WHERE patrimonio=($1)", [data.patrimonio]);
+
+  
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            res.send(result);
+        });
+    });
+});
+
+app.post('/update',function(req,res) {
+	var data = req.body;
+	var json=[];
+	var result = {};
+
+	pg.connect(conString, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+          done();
+          console.log(err);
+        }
+ 
+
+	    query = client.query("UPDATE dadoscatalogo SET titulo = $1,autoria  = $2 , veiculo = $3 , data_publicacao = $4 WHERE patrimonio = $5", [data.titulo,data.autoria,data.veiculo,data.dpub,data.patrimonio]);
+
+ 
+
+  
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+
+        		client.query("DELETE FROM palavras_chave WHERE patrimonio=($1)", [data.patrimonio]);
+                client.query("DELETE FROM palavrasautorianormal WHERE patrimonio=($1)", [data.patrimonio]);
+                client.query("DELETE FROM palavrastitulonormal WHERE patrimonio=($1)", [data.patrimonio]);
+                client.query("DELETE FROM palavrasveiculonormal WHERE patrimonio=($1)", [data.patrimonio]);
+
+
+
+        		var chaves =  data.chave.split(' ');
+		        sql = "INSERT INTO palavras_chave(palchave,patrimonio,palchavenormal) values (upper($1),$2,$3);";
+		        
+		        for(i=0;i<chaves.length;i++){
+		        	client.query(sql,[chaves[i],data.patrimonio,result.chave]);
+		    	}
+
+		    	var autor = data.autoria.split(' ');
+
+		        sql = "INSERT INTO palavrasautorianormal(palavra_autoria_normal,patrimonio) values (upper($1),$2)";
+		        for(i=0;i<autor.length;i++){
+		        	client.query(sql,[autor[i],data.patrimonio]);
+		    	}
+
+		    	var titulo = data.titulo.split(' ');
+
+		        sql = "INSERT INTO palavrastitulonormal(palavra_titulo_normal,patrimonio) values (upper($1),$2);";
+		        
+		        for(i=0;i<titulo.length;i++){
+		        	client.query(sql,[titulo[i],data.patrimonio]);
+		    	}
+
+		    	var veiculo = data.veiculo.split(' ');
+
+		        sql = "INSERT INTO palavrasveiculonormal(palavra_veiculo_normal,patrimonio) values (upper($1),$2);";
+		        
+		        for(i=0;i<veiculo.length;i++){
+		        	client.query(sql,[veiculo[i],data.patrimonio]);
+		    	}
+
+	            result.msg = "Registro alterado com sucesso!";
+
+            done();
+            result.patrimonio=data.patrimonio;
+            result.suc = 1;
+            res.send(result);
+        });
+    });
 });
 
 

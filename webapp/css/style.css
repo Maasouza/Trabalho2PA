@@ -25,7 +25,7 @@ and open the template in the editor.
         .header{
             position: absolute;
             top: calc(50% );
-            left: calc(50% - 420px);
+            left: -350px;
             z-index: 2;
         }
 
@@ -149,7 +149,7 @@ and open the template in the editor.
         }
 
         #dResultado,#dCatalogacao{
-            margin:-150px;
+            margin-top:-180px;
             width:450px;
         }
 
@@ -221,12 +221,14 @@ and open the template in the editor.
 
         }
 
-
+        input[type="text"]:disabled {
+            border: 1px solid rgba(100,100,100,0.6);
+        }
 
 
 
         body {
-
+          background:#eee;
           padding: 0;
           margin: 0;
           font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -320,4 +322,42 @@ and open the template in the editor.
 
             color: #4CAF50;    
 
+        }
+
+        #dpagina{
+            overflow:auto;
+            height:520px;
+        }
+        #dpaginas a{
+            margin: 5px;
+            cursor:pointer;
+        }
+
+        #dResultado button{
+            width: 60px;
+            height: 25px;
+            background: #333;
+            border: 1px solid #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            color: #4CAF50;
+            font-family: 'Exo', sans-serif;
+            font-size: 10px;
+            font-weight: 400;
+            padding: 6px;
+            margin-top: 10px;
+        }
+
+        #dResultado button:hover{
+            opacity: 0.8;
+        }
+
+        #rPage{
+            color:#4CAF50;
+            font-size:25px;
+        }
+
+        #btnVoltarR{
+            font-size:36px;
+            cursor:pointer;
         }
