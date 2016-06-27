@@ -150,6 +150,8 @@ var initBTN = function(){
         function(){
             mudarPagina("#dResultado","#dBusca");
             $(".pagina").remove();
+            $(".resultado").remove();
+            $("#rPage").text("Pagina 1");
 
     });
 };
@@ -416,6 +418,7 @@ var mostrarResultado = function(json){
 
 var selPagina = function(pg){
     $(".resultado").remove();
+    $('a#rPage').text('Pagina '+(pg+1));
     for(i=pg*5;i<Math.min((pg+1)*5,result.length);i++){
         $("#dpagina").append("<fieldset class='resultado'>"+
             "<legend>"+result[i].titulo+"</legend>"+
