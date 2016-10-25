@@ -16,8 +16,8 @@ Para a disciplina do Profº. [Jorge Leão](https://github.com/jlsleao)
   - [x] Front-end utilizando o modelo [SPA](https://en.wikipedia.org/wiki/Single-page_application)
   - [x] Envio de dados para o servidor utilizando AJAX
   - [x] Conexão com o banco de dados
-  - [ ] Criação de funções de CRUD
-  - [ ] Envio de dados contendo as respostas para o front-end
+  - [x] Criação de funções de CRUD
+  - [x] Envio de dados contendo as respostas para o front-end
   
 3. Instruções
         
